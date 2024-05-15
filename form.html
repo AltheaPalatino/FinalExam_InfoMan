@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Form</title>
+    <script>
+        // Function to get URL parameters
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        // Get the username from URL
+        window.onload = function() {
+            var username = getUrlParameter('username');
+            if (username) {
+                document.getElementById('welcomeMessage').innerText = 'Welcome to the canteen, ' + username;
+                document.getElementById('orderForm').action += '?username=' + encodeURIComponent(username);
+            }
+        }
+    </script>
+</head>
+<body>
+    <!-- Order Form -->
+    <h1 id="welcomeMessage">Welcome to the canteen,</h1>
+    <h4>Here are the prices</h4>
+    <ul>
+        <li>Donut - 25 PHP</li>
+        <li>Kikiam - 20 PHP</li>
+        <li>Milktea - 49 PHP</li>
+    </ul>
+    <form id="orderForm" action="result.php" method="POST">
+        <!-- Dropdown to choose the item -->
+        <label for="item">Choose your order:</label>
+        <select name="item" id="item">
+            <option value="donut">Donut - 25 PHP</option>
+            <option value="kikiam">Kikiam - 20 PHP</option>
+            <option value="milktea">Milktea - 49 PHP</option>
+        </select><br><br>
+        <!-- Input for quantity -->
+        <label for="quantity">Quantity:</label>
+        <input type="number" name="quantity" id="quantity" min="1" required><br><br>
+        <!-- Input for cash -->
+        <label for="cash">Cash:</label>
+        <input type="number" name="cash" id="cash" required><br><br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
